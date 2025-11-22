@@ -1,9 +1,11 @@
+using eCommerce.ProductsMicroService.API.APIEndpoints;
 using eCommerce.ProductsMicroService.API.Middleware;
 using eCommerce.ProductsService.BusinessLogicLayer;
 using eCommerce.ProductsService.DataAccessLayer;
 using FluentValidation.AspNetCore;
-using eCommerce.ProductsMicroService.API.APIEndpoints;
+using Microsoft.Extensions.Logging;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging; // Ensure this namespace is included
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +24,9 @@ builder.Services.ConfigureHttpJsonOptions(options => {
   options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
+// Remove default loggers and use log4net
+builder.Logging.ClearProviders();
+builder.Logging.AddLog4Net("log4net.config");
 
 //Add Swagger services
 builder.Services.AddEndpointsApiExplorer();
@@ -35,7 +40,6 @@ builder.Services.AddCors(options => {
     .AllowAnyHeader();
   });
 });
-
 
 var app = builder.Build();
 
