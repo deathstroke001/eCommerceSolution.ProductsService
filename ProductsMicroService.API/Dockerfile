@@ -22,6 +22,7 @@ RUN dotnet publish "./ProductsMicroService.API.csproj" -c $BUILD_CONFIGURATION -
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV MYSQL_HOST=ecommerceproduct.mysql.database.azure.com
-ENV MYSQL_PASSWORD=Test@123
+ENV CONNECTIONSTRINGS_DEFAULTCONNECTION="Server=ecommerceproduct.mysql.database.azure.com;Port=3306;Database=ecommerceproductsdatabase;User ID=mysqladmin;Password=I@mthebest10"
+#ENV MYSQL_HOST=ecommerceproduct.mysql.database.azure.com
+#ENV MYSQL_PASSWORD=Test@123
 ENTRYPOINT ["dotnet", "ProductsMicroService.API.dll"]

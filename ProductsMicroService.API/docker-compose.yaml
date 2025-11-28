@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+
+ orders-microservice:
+  image: deathstroke10/ordersmicroservice:1.0.0
+  environment:
+   ENV MONGODB_HOST: mongodb+srv://kishlay1394_db_user:DmEoqY4cyMKajH8i@orderservice.raur6pl.mongodb.net/?appName=orderservice
+   ENV MONGODB_ORDERS_DB: OrdersDatabase
+   ENV UsersMicroserviceURL: http://users-microservice:9090
+  ports:
+   - "7000:8080"
+
+
+ products-microservice:
+  image: deathstroke10/ecoommece-product-microservice:7.0.0
+  environment:
+   ENV CONNECTIONSTRINGS_DEFAULTCONNECTION: Server=ecommerceproduct.mysql.database.azure.com;Port=3306;Database=ecommerceproductsdatabase;User ID=mysqladmin;Password=I@mthebest10
+  ports:
+   - "8080:8080"
+
+ users-microservice:
+  image: deathstroke10/ecommerce-users-microservice:2.0.0
+  environment:
+   ENV CONNECTIONSTRINGS_DEFAULTCONNECTION_USERS: Host=ecommerceusers.postgres.database.azure.com; Port=5432; Database=eCommerceUsers; Username=postgresadmin; Password=I@mthebest10
+  ports:
+   - "9090:8080"
+

@@ -19,15 +19,10 @@ public static class DependencyInjection
         //var hostFromEnv = Environment.GetEnvironmentVariable("MYSQL_HOST");
         //var pwdFromEnv = Environment.GetEnvironmentVariable("MYSQL_PASSWORD");
 
-        string connectionStringTemplate = configuration.GetConnectionString("DefaultConnection")!;
-        string connectionString = connectionStringTemplate
-          .Replace("$MYSQL_HOST", Environment.GetEnvironmentVariable("MYSQL_HOST"))
-          .Replace("$MYSQL_PASSWORD", Environment.GetEnvironmentVariable("MYSQL_PASSWORD"));
-
+        string connectionStringTemplate = configuration.GetConnectionString("ISLOCAL")!;
+        string connectionString = connectionStringTemplate == "1"? "Server=ecommerceproduct.mysql.database.azure.com;Port=3306;Database=ecommerceproductsdatabase;User ID=mysqladmin;Password=I@mthebest10"
+            : Environment.GetEnvironmentVariable("CONNECTIONSTRINGS_DEFAULTCONNECTION")!;
         Logger.LogInformation($"{connectionString}: connectionString");
-        Logger.LogInformation($"{connectionStringTemplate}: connectionStringTemplate");
-        Logger.LogInformation($"{Environment.GetEnvironmentVariable("MYSQL_HOST")}: Environment.GetEnvironmentVariable(\"MYSQL_HOST\")");
-        Logger.LogInformation($"{Environment.GetEnvironmentVariable("MYSQL_PASSWORD")}: Environment.GetEnvironmentVariable(\"MYSQL_PASSWORD\")");
 
         services.AddDbContext<ApplicationDbContext>(options => {
       options.UseMySQL(connectionString);
